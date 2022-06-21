@@ -1,7 +1,4 @@
 <?php
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-$db = new DB_Operations('localhost', 'root', '', 'first-project');
-
 
 
 require_once "DB.php";
