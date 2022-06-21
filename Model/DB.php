@@ -128,17 +128,7 @@ class DB_Operations extends DB{
         return $ret_data;
     }
 
-    
-  
  
 
 }
 
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
-$db = new DB_Operations('localhost', 'root', '', 'first-project');
-
-$id=1;
-
-$data = $db->select('SELECT name, email FROM users WHERE id = ?', array("i"),  array($id));
-
-echo $data[0]['name'];
