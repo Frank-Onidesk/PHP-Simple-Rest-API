@@ -87,7 +87,7 @@ class DB_Operations extends DB{
 
 
     public function select($sql, $a_param_type, $a_bind_params) :array {
-        $arr = [];
+     
         try{
      
             $a_params = array();
@@ -115,10 +115,9 @@ class DB_Operations extends DB{
 
         $stmt->execute();
         $result = $stmt->get_result();
-        $ret_data =  [];
-
+       
         while($row = $result->fetch_array(MYSQLI_ASSOC)) {
-            array_push($ret_data, $row);
+            $ret_data[] = $row;
           }
        // $stmt->free_result();
        
@@ -129,7 +128,38 @@ class DB_Operations extends DB{
         return $ret_data;
     }
 
+   public function select_result( $sql, $params)  : string | array
+   {
+      $stmt = $this->conn->prepare($sql);
  
+   
+
+        $a_params = array();
+        $n = count($params);
+       for($i = 0; $i < $n; $i++) {
+         $a_params[] = & $params[$i];
+       }
+     
+     
+      call_user_func_array(array($stmt, 'bind_result'), $a_params);
+        $stmt->execute();
+        $result = $stmt->get_result();
+      
+        $arr = [];
+        while($row = $result->fetch_array(MYSQLI_ASSOC)) {
+           $arr[]= $row;
+          
+        }
+        
+        $data = '';
+        foreach($arr as $product){
+            foreach($product as $key => $val) {
+                 $data .= $product[$key] ."<br/>";
+               }
+          }
+
+          return $data;
+   }
 
 }
 
